@@ -1,0 +1,615 @@
+Delivered-To: nathan@leadadvisors.net
+Received: by 2002:a6b:d305:0:0:0:0:0 with SMTP id s5csp10943699iob;
+        Mon, 31 Dec 2018 09:15:42 -0800 (PST)
+X-Google-Smtp-Source: ALg8bN4wjFLpZDt8lB48cGpkiy47NzLlf72x+jWs4yhl3ZAAGF4VLkXAKH1wf2KAA7lcndsKZj8z
+X-Received: by 2002:a17:902:a60f:: with SMTP id u15mr36164009plq.275.1546276542229;
+        Mon, 31 Dec 2018 09:15:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1546276542; cv=none;
+        d=google.com; s=arc-20160816;
+        b=0x/cYROUeuhb5QhLUqcTQSMmUor9Hr5DAAz39OR+XRNFKlZQPExYiud34RzWZeKRlT
+         GYVTZ63OiSnusnGWFvga9fGHhEfaUb7GrpGx00JUHuWVBkQs8Wtz7/md49jKQlaXZ63V
+         9/Nnx+FGChi7RdtWNrxoGjaIBizeqJU40MwIkvMbzEyANCy7YMBAfHRy3SKS4ZWbHtCC
+         abWHzN+5cpBun38w3WjMKXFuFy1/FM0BreBgF0LzMEMhmPQKU1tpuMWs1+Ieyve52xbO
+         Z6cumWpGFInGZdl/TZbhnbSUkwhSPmO5CdvwwTHp8voIt74Htr/Iwo8V5RFiMpRygQA6
+         ELkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=date:list-unsubscribe:from:message-id:subject:reply-to:mime-version
+         :to:dkim-signature;
+        bh=rE/QIOBxK/ahcduGaAOAPl+dMhxxpFkWaoQFrOIBGEs=;
+        b=jrZbNF5chX18WqLcP8tquW8oLMm6GCy6Scp13jDvBg4JQ3eYDQAqYktvJxwMoQQ6k5
+         euh+rEiNL6YNGUSC7xyrBv2wiFZQ5qt1/LjvRH8AhWWKDkrldb789uS71QKvcZs0t+Bb
+         Q4wmdge5AnWoKI20buiz0qufU1Ad3U90P2wsktERTPHwH1VDYbT8ux7VXNshmfLXRj9X
+         oZ0KxuYXXI0U15RlDHojMOVpOonLLNWeWbVyM4HqypWLR96iJuATnydfJn2WmjTRO38F
+         mjwzdKtthIgClQTpPTqS2rNAlaW/kwkNf2vRwmpmhqxzNsdOq8oU6fYHVqLkcaFnntTe
+         XEdg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@lead-advisors.intercom-mail.com header.s=intercom header.b=kvXhd3SY;
+       spf=pass (google.com: domain of bounces@rp.lead-advisors.intercom-mail.com designates 52.27.255.220 as permitted sender) smtp.mailfrom=bounces@rp.lead-advisors.intercom-mail.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=intercom-mail.com
+Return-Path: <bounces@rp.lead-advisors.intercom-mail.com>
+Received: from mta1a6.spe.intercom-mail.com (mta1a6.spe.intercom-mail.com. [52.27.255.220])
+        by mx.google.com with ESMTPS id b5si46739316pfg.121.2018.12.31.09.15.41
+        for <nathan@leadadvisors.net>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 31 Dec 2018 09:15:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces@rp.lead-advisors.intercom-mail.com designates 52.27.255.220 as permitted sender) client-ip=52.27.255.220;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@lead-advisors.intercom-mail.com header.s=intercom header.b=kvXhd3SY;
+       spf=pass (google.com: domain of bounces@rp.lead-advisors.intercom-mail.com designates 52.27.255.220 as permitted sender) smtp.mailfrom=bounces@rp.lead-advisors.intercom-mail.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=intercom-mail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lead-advisors.intercom-mail.com; s=intercom; t=1546276540; i=@lead-advisors.intercom-mail.com; bh=rE/QIOBxK/ahcduGaAOAPl+dMhxxpFkWaoQFrOIBGEs=; h=To:Content-Type:Subject:Message-ID:From:Date; b=kvXhd3SYJ9YAkaSCvPJOgEq9bt4PhTopyp2JKnjswlaBrDapsT8J11F1J7c8K418l
+	 bQ7uYtI1iPwTeCztiYewR1uespFK+jmVsNSMJ/ZQR8BFgCuG+4wHPq3xe1M4tQQolt
+	 1UxCe0HtsdLm0LRONBeYF0z60DErZRtfjPQzIdTk=
+X-MSFBL: vGVlmxNprUzsRvi2ONAdFNHJ0sN45vdghzOLx79S6as=|eyJjdXN0b21lcl9pZCI 6IjEiLCJyIjoibmF0aGFuQGxlYWRhZHZpc29ycy5uZXQiLCJzdWJhY2NvdW50X2l kIjoiMTM5MTMiLCJtZXNzYWdlX2lkIjoiMDAwOWJjNGUyYTVjOWU4OWU0OGEiLCJ 0ZW5hbnRfaWQiOiJpbnRlcmNvbSJ9
+To: nathan@leadadvisors.net
+Content-Type: multipart/alternative; boundary="_----yPcII++Zy/Q/6b9gQwU9Cw===_6D/A8-35230-CBE4A2C5"
+MIME-Version: 1.0
+X-Mailgun-Variables: {"app_id":"nsuigxtx","user_id":"5c2a4ebb294c4bfc3bb8b44f"}
+X-Auto-Response-Suppress: OOF, AutoReply
+Reply-To: Anthony from Lead Advisors <anthony.t@lead-advisors.intercom-mail.com>
+X-Mailgun-Tag: user-custom
+X-Intercom-App-Id: nsuigxtx
+X-Intercom-Bin: 500
+Subject: [TEST] New Year, New Results
+Message-ID: <8c231fe4-2d8a866c-1546276539-@lead-advisors.intercom-mail.com>
+X-Mailgun-Track-Clicks: no
+From: Anthony from Lead Advisors <anthony.t@lead-advisors.intercom-mail.com>
+X-Mailgun-Track-Opens: no
+List-Unsubscribe: <mailto:unsubscribe+_@lead-advisors.intercom-mail.com>, <https://lead-advisors.intercom-mail.com/subscriptions/unsubscribe?app_id=nsuigxtx&sample=true>
+Date: Mon, 31 Dec 2018 17:15:39 +0000
+
+--_----yPcII++Zy/Q/6b9gQwU9Cw===_6D/A8-35230-CBE4A2C5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hey Mike,
+
+
+--_----yPcII++Zy/Q/6b9gQwU9Cw===_6D/A8-35230-CBE4A2C5
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.=
+w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8=
+">
+    <meta name=3D"viewport" content=3D"initial-scale=3D1.0">
+    <meta name=3D"format-detection" content=3D"telephone=3Dno">
+    <title>Email Template</title>
+    <style type=3D"text/css" data-premailer=3D"ignore">
+        .ReadMsgBody { width: 100%; background-color: #ebebeb;}
+        .ExternalClass {width: 100%; background-color: #ebebeb;}
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalCla=
+ss font, .ExternalClass td, .ExternalClass div {line-height:100%;}
+        body {-webkit-text-size-adjust:none; -ms-text-size-adjust:none;}
+        body {margin:0; padding:0;}
+        table {border-spacing:0;}
+        table td {border-collapse:collapse;}
+        .yshortcuts a {border-bottom: none !important;}
+        @media screen and (max-width: 600px), screen and (max-device-width:=
+ 600px) {
+            table[class=3D"container"] { width: 95% !important; }
+        }
+        @media screen and (max-width: 480px), screen and (max-device-width:=
+ 480px) {
+            td[class=3D"container-padding"] { padding-left: 12px !important=
+; padding-right: 12px !important; }
+        }
+    </style>
+    <style type=3D"text/css">
+a.ic-unsubscribe-link{font-family: Helvetica, Verdana, sans-serif;}
+        body { background-color: #f0f0f0; padding: 10px 0; margin: 10px 0; =
+}
+        table.container { box-shadow: 0 0 3px #ddd; border-bottom: 1px soli=
+d #e0e0e0; font-family: Helvetica, Verdana, sans-serif; color: #434343; }
+
+        table.container td { border-left: 1px solid #e0e0e0; }
+        table.container td.header div { height: 5px; border: 1px solid #137=
+8bd; background-color: #1378bd; -webkit-border-radius: 2px;  border-radius:=
+ 2px; box-shadow: inset 0 1px 0 #3e6aaa; }
+        table.container td.logo { text-align: center; padding: 50px 0; bord=
+er-bottom: 1px solid #efefef; }
+        h1, h2, h3, h4, h5, h6 { color: #0e4595; line-height: 1.5; margin: =
+0 0 25px 0; }
+        h1 { font-size: 22px; } h2 { font-size: 18px; } h3 { font-size: 16p=
+x; } h4, h5, h6 { font-size: 14px; }
+        p { font-size: 14px; line-height: 1.5; margin: 0 0 25px 0; color: #=
+434343; }
+        a { color: #0e4595; text-decoration: underline; }
+        td.container-padding img { border: 1px solid #ddd; padding: 37px; m=
+argin: 0 19px; box-shadow: 0 0 3px #ddd; }
+        a.intercom-h2b-button { background-color: #0E4595; border-radius: 5=
+px; border: 1px solid rgba(0,0,0,0.2); color:#fff; display: inline-block; f=
+ont-size: 15px; font-weight: bold; min-height: 20px; padding: 9px 15px; tex=
+t-decoration: none; }
+        ul li, ol li { font-size: 14px; line-height: 1.5; }
+        table.footer { border-top: 1px solid #efefef; width: 100%; height: =
+69px; }
+        table.footer td { vertical-align: middle; text-align: center; color=
+: #434343; font-size: 12px; }
+        table.footer td.social { width: 60%; line-height: 20px; border-left=
+: none; }
+        table.footer td.social a { font-weight: bold; text-decoration: none=
+; }
+        table.footer td.social a.twitter { color: #00aced; }
+        table.footer td.social a.facebook { color: #6d83bc; }
+        table.footer td.social img { vertical-align: middle; }
+        table.footer td.subscription { width: 40%; }
+        table.footer td.subscription a { color: #434343; }
+    </style>
+<style>.intercom-align-right {
+  text-align: right !important;
+}
+.intercom-align-center {
+  text-align: center !important;
+}
+.intercom-align-left {
+  text-align: left !important;
+}
+/* Over-ride for RTL */
+.right-to-left .intercom-align-right{
+  text-align: left !important;
+}
+.right-to-left .intercom-align-left{
+  text-align: right !important;
+}
+.right-to-left .intercom-align-left {
+  text-align:right !important;
+}
+.right-to-left li {
+  text-align:right !important;
+  direction: rtl;
+}
+.right-to-left .intercom-align-left img,
+.right-to-left .intercom-align-left .intercom-h2b-button {
+  margin-left: 0 !important;
+}
+.intercom-attachment,
+.intercom-attachments,
+.intercom-attachments td,
+.intercom-attachments th,
+.intercom-attachments tr,
+.intercom-attachments tbody,
+.intercom-attachments .icon,
+.intercom-attachments .icon img {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.intercom-attachments {
+  margin: 10px 0 !important;
+}
+.intercom-attachments .icon,
+.intercom-attachments .icon img {
+  width: 16px !important;
+  height: 16px !important;
+}
+.intercom-attachments .icon {
+  padding-right: 5px !important;
+}
+.intercom-attachment {
+  display: inline-block !important;
+  margin-bottom: 5px !important;
+}
+
+.intercom-interblocks-content-card {
+  width: 334px !important;
+  max-height: 136px !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  border-radius: 20px !important;
+  font-size: 16px !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.intercom-interblocks-link,
+.intercom-interblocks-article-card {
+  text-decoration: none !important;
+}
+
+.intercom-interblocks-article-icon {
+  width: 22.5% !important;
+  height: 136px !important;
+  float: left !important;
+  background-color: #fafafa !important;
+  background-image: url('https://lead-advisors.intercom-mail.com/assets/art=
+icle_book-1a595be287f73c0d02f548f513bfc831.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 32px !important;
+  background-position: center !important;
+}
+
+.intercom-interblocks-article-text {
+  width: 77.5% !important;
+  float: right !important;
+  background-color: #fff !important;
+}
+
+.intercom-interblocks-link-title,
+.intercom-interblocks-article-title {
+  color: #519dd4 !important;
+  font-size: 15px !important;
+  margin: 16px 18px 12px !important;
+  line-height: 1.3em !important;
+  overflow: hidden !important;
+}
+
+.intercom-interblocks-link-description,
+.intercom-interblocks-article-body {
+  margin: 0 18px 12px !important;
+  font-size: 14px !important;
+  color: #65757c !important;
+  line-height: 1.3em !important;
+}
+
+.intercom-interblocks-link-author,
+.intercom-interblocks-article-author {
+  margin: 10px 15px !important;
+  height: 24px !important;
+  line-height: normal !important;
+}
+
+.intercom-interblocks-link-author-avatar,
+.intercom-interblocks-article-author-avatar {
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  float: left;
+  margin-right: 5px;
+}
+
+.intercom-interblocks-link-author-avatar-image,
+.intercom-interblocks-article-author-avatar-image {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  margin: 0 !important;
+  vertical-align: top !important;
+  font-size: 12px !important;
+}
+
+.intercom-interblocks-link-author-name,
+.intercom-interblocks-article-author-name {
+  color: #74848b !important;
+  margin: 0 0 0 5px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  overflow: hidden !important;
+}
+
+.intercom-interblocks-article-written-by {
+  color: #8897a4 !important;
+  margin: 1px 0 0 5px !important;
+  font-size: 12px !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+  float: left !important;
+}
+</style>
+</head>
+<body style=3D"background-color: #f0f0f0; margin: 0; padding: 10px 0" bgcol=
+or=3D"#f0f0f0">
+<style type=3D"text/css">
+body {
+background-color: #f0f0f0; padding: 10px 0; margin: 10px 0;
+}
+</style>
+<br>
+<table border=3D"0" width=3D"100%" height=3D"100%" cellpadding=3D"0" cellsp=
+acing=3D"0" bgcolor=3D"#f0f0f0">
+  <tbody>
+<tr>
+    <td align=3D"center" valign=3D"top" bgcolor=3D"#f0f0f0" style=3D"backgr=
+ound-color: #f0f0f0">
+      <table width=3D"600" cellpadding=3D"0" cellspacing=3D"0" border=3D"0"=
+ class=3D"container" bgcolor=3D"#ffffff" style=3D"border-bottom-color: #e0e=
+0e0; border-bottom-style: solid; border-bottom-width: 1px; box-shadow: 0 0 =
+3px #ddd; color: #434343; font-family: Helvetica, Verdana, sans-serif">
+        <tbody>
+<tr>
+            <td class=3D"header" style=3D"border-left-color: #e0e0e0; borde=
+r-left-style: solid; border-left-width: 1px">
+                <div style=3D"-webkit-border-radius: 2px; background-color:=
+ #1378bd; border: 1px solid #1378bd; border-radius: 2px; box-shadow: inset =
+0 1px 0 #3e6aaa; height: 5px">=C2=A0</div>
+            </td>
+        </tr>
+        <tr>
+            <td class=3D"logo" style=3D"border-bottom-color: #efefef; borde=
+r-bottom-style: solid; border-bottom-width: 1px; border-left-color: #e0e0e0=
+; border-left-style: solid; border-left-width: 1px; padding: 50px 0; text-a=
+lign: center" align=3D"center">
+                <a href=3D"https://leadadvisors.net/" style=3D"color: #0e45=
+95; text-decoration: underline"><img src=3D"https://i.imgur.com/J8kpgUN.png=
+" style=3D"width: 250px"></a>
+
+            </td>
+        </tr>
+        <tr>
+          <td class=3D"container-padding" bgcolor=3D"#ffffff" style=3D"back=
+ground-color: #ffffff; border-left-color: #e0e0e0; border-left-style: solid=
+; border-left-width: 1px; padding-left: 30px; padding-right: 30px">
+            <br>
+            <!-- ### BEGIN CONTENT ### -->
+            <p class=3D"intercom-align-left" style=3D"color: #434343; font-=
+size: 14px; line-height: 1.5; margin: 0 0 25px; text-align: left !important=
+" align=3D"left">Hey Mike,</p>
+
+
+
+
+
+
+
+
+
+
+<!-- ### BEGIN BANNER IMAGE ### -->
+
+            <img src=3D"https://i.imgur.com/FrCsika.png" width=3D"500" styl=
+e=3D"border: 1px none #ddd; box-shadow: none; margin: 5px 19px -20px; paddi=
+ng: 37px; text-align: center">
+
+          <!-- ### BANNER IMAGE ### -->
+
+
+
+
+ <!-- ### BEGIN REGULAR TEXT ### -->
+
+          <p style=3D"color: #434343; font-size: 14px; line-height: 1.5; ma=
+rgin: 5px 0 25px; text-align: center" align=3D"center">2018 is all but in t=
+he books! Are you tired of promoting posts on social media without any retu=
+rn on your advertising investment?
+Tell me about it=E2=80=A6.
+</p>
+
+
+          <p style=3D"color: #434343; font-size: 14px; line-height: 1.5; ma=
+rgin: 0 0 25px; text-align: center" align=3D"center">With the complex and f=
+ast paced market. The only way to make your online advertising profitable. =
+You have to build your BRAND and STRATEGIZE a SALES FUNNEL where you can co=
+nvert your social media engagement into sales.
+</p>
+
+
+          <p style=3D"color: #434343; font-size: 14px; line-height: 1.5; ma=
+rgin: 0 0 25px; text-align: center" align=3D"center">We strategize on getti=
+ng you the clicks to convert with an audience that will suit your business =
+so you can boost your revenue.</p>
+
+
+       =20
+
+          <!-- ### END REGULAR TEXT ### -->
+
+
+
+
+
+ <!-- ### USE THE CODE BELOW FOR TWO SIDE BY SIDE BUTTONS ### -->
+
+
+
+
+          <table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" align=3D"center" style=3D"margin-bottom: 20px; margin-top: 20px">
+          =20
+           <tbody>
+<tr>
+             <td style=3D"border-left-color: #e0e0e0; border-left-style: so=
+lid; border-left-width: 0px; text-align: center; width: 100%" align=3D"cent=
+er">
+              =20
+               <a href=3D"https://calendly.com/leadadvisor/customcampaign30=
+min" class=3D"banner-btn-green intercom-h2b-button" style=3D"background-col=
+or: #39b54a; border: 0px solid rgba(0,0,0,0.2); border-radius: 5px; color: =
+#fff; display: inline-block; font-size: 15px; font-weight: bold; margin-top=
+: 10px; min-height: 20px; padding: 15px; text-decoration: none">TALK TO AN =
+EXPERT</a>
+
+               <a href=3D"https://leadadvisors.net/offer/" class=3D"banner-=
+btn-pink intercom-h2b-button" style=3D"background-color: #f0537a; border: 0=
+px solid rgba(0,0,0,0.2); border-radius: 5px; color: #fff; display: inline-=
+block; font-size: 15px; font-weight: bold; margin-top: 10px; min-height: 20=
+px; padding: 15px; text-decoration: none">PACKAGES AND PRICING</a>
+             </td>
+           </tr>
+
+          </tbody>
+</table>
+
+          <!-- ### END TWO SIDE BY SIDE BUTTONS ### -->
+
+
+
+
+
+
+ <!-- ### USE THE CODE BELOW FOR A LARGE HEADLINE ### -->
+
+          <h1 style=3D"color: #004a74; font-size: 22px; font-weight: 700; l=
+ine-height: 1.5; margin: 70px 0 20px; text-align: center" align=3D"center">=
+Our highly anticipated 2019 Digital Marketing Promotions are here and ready=
+ to take off! </h1>
+
+          <!-- ### END LARGE HEADLINE ### -->
+=20
+
+
+
+ <!-- ### BEGIN DISCOUNT IMAGES ### -->
+
+            <img src=3D"https://i.imgur.com/l56ckvY.png" width=3D"500" styl=
+e=3D"border: 1px none #ddd; box-shadow: none; margin: 5px 19px 50px; paddin=
+g: 37px; text-align: center">
+
+          <!-- ### END DISCOUNT IMAGES ### -->
+
+
+
+
+ <!-- ### BEGIN LANDING PAGES ### -->
+
+            <img src=3D"https://i.imgur.com/kD1x9c5.png" width=3D"500" styl=
+e=3D"border: 1px none #ddd; box-shadow: none; margin: -70px 19px 10px; padd=
+ing: 37px; text-align: center">
+
+          <!-- ### END LANDING PAGES ### -->
+
+
+
+
+<!-- ### BEGIN LAST PARAGRAPH ### -->
+
+<p style=3D"color: #434343; font-size: 14px; line-height: 1.5; margin: 0 0 =
+25px; text-align: center" align=3D"center">We are excited to be a resource =
+for your business and help provide your business a launching pad into 2019.=
+ Please email me or Schedule a Call to discuss more.
+</p>
+
+
+          <!-- ### LAST PARAGRAPH ### -->
+
+
+
+
+
+<!-- ### BEGIN BUTTON ### -->
+
+
+
+</td>
+</tr>
+<tr>
+<td style=3D"border-left-color: #e0e0e0; border-left-style: solid; border-l=
+eft-width: 1px; text-align: center" align=3D"center">
+
+            <a href=3D"https://calendly.com/leadadvisor/customcampaign30min=
+" class=3D"banner-btn-green intercom-h2b-button" style=3D"background-color:=
+ #39b54a; border: 0px solid rgba(0,0,0,0.2); border-radius: 5px; color: #ff=
+f; display: inline-block; font-size: 15px; font-weight: bold; margin-bottom=
+: 30px; margin-top: 10px; min-height: 20px; padding: 15px; text-decoration:=
+ none">SCHEDULE A CALL</a>
+                </td>
+            </tr>
+
+            <!-- ### END BUTTON ### -->
+
+
+
+
+       =20
+
+
+
+
+
+      =20
+
+ <!-- ### USE THIS CODE FOR THE EMAIL SIGNATURE ON ALL EMAILS ### -->
+         =20
+</tbody>
+</table>
+
+
+
+    <h2 style=3D"color: #004a74; font-family: Helvetica, Verdana, sans-seri=
+f; font-size: 20px; font-weight: bolder; line-height: 1.5; margin: 40px 0 2=
+5px">Anthony Tareh</h2>
+    <p style=3D"color: #434343; font-family: Helvetica, Verdana, sans-serif=
+; font-size: 15px; font-weight: bolder; line-height: 1.5; margin: -18px 0 2=
+5px">=E2=98=8F (888) 761-9142</p>
+    <p style=3D"color: #434343; font-family: Helvetica, Verdana, sans-serif=
+; font-size: 15px; font-weight: bolder; line-height: 1.5; margin: -25px 0 2=
+5px">LeadAdvisors.net | Hello@leadadvisors.net </p>
+    <p style=3D"color: #434343; font-family: Helvetica, Verdana, sans-serif=
+; font-size: 14px; line-height: 1.5; margin: 15px 0 25px; padding: 20px">Th=
+is email message and any attachment(s) hereto are intended for use only by =
+its intended recipient(s) and may contain confidential information. If you =
+have received this email in error, please immediately notify the sender and=
+ permanently delete the original and any copy of this message and its attac=
+hments.</p>
+    <a href=3D"https://leadadvisors.net/" style=3D"color: #0e4595; text-dec=
+oration: underline"><img src=3D"https://i.imgur.com/J8kpgUN.png" style=3D"m=
+argin-bottom: 25px; width: 150px"></a>
+
+    <!-- ### END EMAIL SIGNATURE ### -->
+
+       =20
+<table border=3D"0" width=3D"100%" height=3D"100%" cellpadding=3D"0" cellsp=
+acing=3D"0" bgcolor=3D"#fbfbfb" class=3D"footer" style=3D"border-top-color:=
+ #efefef; border-top-style: solid; border-top-width: 1px; height: 69px; wid=
+th: 100%">
+                    <tbody>
+<tr>
+                        <td class=3D"social" style=3D"border-left-style: no=
+ne; color: #434343; font-family: Helvetica, Verdana, sans-serif; font-size:=
+ 12px; line-height: 20px; padding: 30px; text-align: left; vertical-align: =
+middle; width: 60%" align=3D"left" valign=3D"middle">
+                            Follow us:
+
+<a href=3D"https://www.facebook.com/LeadAdvisors/" class=3D"facebook" style=
+=3D"color: #6d83bc; font-weight: bold; text-decoration: none"><img src=3D"h=
+ttps://lead-advisors.intercom-mail.com/assets/emails/social/facebook-icon-4=
+0x40-at-2x-663586a3cf098c09739f886abdf16e5a2ccf55b885d99539c4b4cc0968518dd6=
+.png" width=3D"20" height=3D"20" style=3D"vertical-align: middle"> </a>
+
+<a href=3D"https://twitter.com/lead_advisors" class=3D"twitter" style=3D"co=
+lor: #00aced; font-weight: bold; text-decoration: none"><img src=3D"https:/=
+/lead-advisors.intercom-mail.com/assets/emails/social/twitter-icon-40x40-at=
+-2x-da23f0e307ca1e317d909653cc44825f4a1b959b7b8e138c43f3e5426204cfac.png" w=
+idth=3D"20" height=3D"20" style=3D"vertical-align: middle"></a>=20
+
+<a href=3D"https://www.instagram.com/lead_advisors/" class=3D"instagram" st=
+yle=3D"color: #0e4595; font-weight: bold; text-decoration: none"><img src=
+=3D"https://i.imgur.com/l7ltjwG.png" width=3D"20" height=3D"20" style=3D"ve=
+rtical-align: middle"></a>=20
+
+<a href=3D"https://www.instagram.com/lead_advisors/" class=3D"linkedin" sty=
+le=3D"color: #0e4595; font-weight: bold; text-decoration: none"><img src=3D=
+"https://i.imgur.com/lRAYLm5.png" width=3D"20" height=3D"20" style=3D"verti=
+cal-align: middle"></a>=20
+
+
+                        </td>
+                        <td style=3D"color: #434343; font-size: 12px; text-=
+align: center; vertical-align: middle" align=3D"center" valign=3D"middle">
+                            <a href=3D"https://lead-advisors.intercom-mail.=
+com/subscriptions/unsubscribe?app_id=3Dnsuigxtx&sample=3Dtrue" style=3D"col=
+or: #0e4595; text-decoration: underline">Unsubscribe from our emails</a>
+                        </td>
+                    </tr>
+                </tbody>
+</table>
+            </td>
+        </tr>
+      </tbody>
+</table>
+   =20
+ =20
+<br>
+
+
+
+
+
+
+
+
+
+<img src=3D"https://lead-advisors.intercom-mail.com/via/o?h=3Dc7dc0bfd5c9c4=
+89cf4ef372e153ce3b8576b5468-" width=3D"1" height=3D"1" style=3D"display: bl=
+ock;" alt=3D"intercom">
+
+<img border=3D"0" width=3D"1" height=3D"1" alt=3D"" src=3D"https://lead-adv=
+isors.intercom-mail.com/q/PqBBKwje9_E1wQBM65xkJg~~/AAAAAQA~/RgReDNO8PlcIaW5=
+0ZXJjb21CCgAJvE4qXJ6J5IpSF25hdGhhbkBsZWFkYWR2aXNvcnMubmV0WAQAADZZ">
+</body>
+</html>
+
+--_----yPcII++Zy/Q/6b9gQwU9Cw===_6D/A8-35230-CBE4A2C5--
